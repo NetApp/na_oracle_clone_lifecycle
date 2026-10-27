@@ -1,0 +1,30 @@
+######################################################################
+###### Oracle database clone from ONTAP storage via SnapCtr CLI ######
+###### Global variables from ONTAP, SnapCtr, linux, and oracle  ######
+######                      AJC 04/09/2024                      ######
+######################################################################
+
+###########################################
+### ONTAP specific config variables     ###
+###########################################
+
+
+###########################################
+### SnapCtr specific config variables   ###
+###########################################
+
+snapctr_usr: azureuser      	
+snapctr_pwd: 'XXXXXXXX'      	
+
+backup_policy: 'Oracle full offline backup'
+
+
+###########################################
+### Linux specific config variables     ###
+###########################################
+
+
+###########################################
+### Oracle specific config variables    ###
+###########################################
+

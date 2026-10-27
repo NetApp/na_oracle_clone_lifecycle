@@ -1,0 +1,10 @@
+# User configurable Oracle clone db host specific parameters
+
+# Source database to clone from 
+source_db_sid: NTAP1
+source_db_host: ora_03.cie.netapp.com
+
+# Clone database
+clone_db_sid: NTAP1DEV
+
+snapctr_obj_id: '{{ source_db_host }}\{{ source_db_sid }}'

@@ -1,0 +1,6 @@
+---
+
+# Default parameters
+
+spl_bin: /opt/NetApp/snapcenter/spl/bin
+clone_spec_dir: /var/opt/snapcenter/sco/clone_specs

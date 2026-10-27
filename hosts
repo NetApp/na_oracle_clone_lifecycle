@@ -1,0 +1,9 @@
+#Oracle clone hosts
+
+[clone_1]
+ora_04.cie.netapp.com ansible_host=10.61.180.29 ansible_ssh_private_key_file=ora_04.pem
+
+[clone_2]
+
+
+[clone_3]

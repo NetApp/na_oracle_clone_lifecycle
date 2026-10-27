@@ -1,0 +1,53 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+ name: dc28105nnt17
+ namespace: trident
+type: Opaque
+stringData:
+ username: "admin"
+ password: "NetApp!23"
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+ name: dc28105nnt17-nfs
+ namespace: trident
+ annotations:
+   argocd.argoproj.io/sync-wave: "3"
+   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+ version: 1
+ storageDriverName: ontap-nas
+ managementLIF: 10.193.94.39
+ dataLIF: xxxxx
+ backendName: dc28105nnt17-nfs-trident-backend
+ svm: xxxxxx
+ defaults:
+   exportPolicy: default
+   snapshotPolicy: none
+ credentials:
+   name: dc28105nnt17
+ supportedTopologies:
+   - topology.kubernetes.io/zone: edc2h1
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+ name: ontap-nas-trident-nfsv4-dc1h1
+ annotations:
+   argocd.argoproj.io/sync-wave: "3"
+provisioner: csi.trident.netapp.io
+volumeBindingMode: WaitForFirstConsumer
+allowedTopologies:
+ - matchLabelExpressions:
+     - key: topology.kubernetes.io/zone
+       values:
+         - edc1h1
+parameters:
+ storagePools: "backend:.*"
+allowVolumeExpansion: true
+mountOptions:
+ - nconnect=8
+ 

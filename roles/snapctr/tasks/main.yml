@@ -1,0 +1,30 @@
+---
+- block:
+# ----------------------------------------------------------------------------------------------------------------------
+# Create or refresh an Oracle clone database hosted in ONTAP storage
+# ----------------------------------------------------------------------------------------------------------------------
+    - name: Connect to SnapCenter from target clone Oracle server
+      ansible.builtin.shell: "{{ spl_bin }}/sccli Open-SmConnection -Username {{ snapctr_usr }} -Password {{ snapctr_pwd }}"
+      tags:
+        - snapctr_smconnect
+
+    - name: Retrieve clone specification file on clone target server
+      ansible.builtin.shell: "/usr/bin/ls /var/opt/snapcenter/sco/clone_specs | grep {{ clone_db_sid }}" 
+      register: output
+      tags: 
+        - snapctr_clone_refresh
+ 
+    - set_fact:
+        clone_spec_file: "{{ output.stdout_lines[0] }}"
+      tags:
+        - snapctr_clone_refresh
+    
+    - debug:
+        msg: "{{ clone_spec_file }}"
+      tags:
+        - snapctr_clone_refresh
+ 
+    - name: Create or refresh clone DB 
+      ansible.builtin.shell: "{{ spl_bin }}/sccli Refresh-SmClone -OracleCloneSpecificationFile {{ clone_spec_dir }}/{{ clone_spec_file }} -CloneToHost {{ inventory_hostname }} -PolicyName '{{ backup_policy }}'"
+      tags:
+        - snapctr_clone_refresh

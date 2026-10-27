@@ -1,0 +1,10 @@
+- name: Clone Oracle database from ONTAP storage via SnapCenter CLI
+  hosts: clone_1 
+  gather_facts: True
+  vars_files:
+    - roles/snapctr/defaults/main.yml
+  tasks:
+    - name: Call clone_setup tasks block
+      include_role:
+        name: snapctr
+        tasks_from: clone_setup.yml

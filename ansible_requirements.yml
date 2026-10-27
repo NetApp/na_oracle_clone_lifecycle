@@ -1,0 +1,35 @@
+---
+- name: Install requirements for running the playbooks
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+    - name: Install python libraries
+      pip:
+        name:
+          - netapp-lib
+          - xmltodict
+          - jmespath
+
+    - name: Install collections netapp.cloudmanager
+      community.general.ansible_galaxy_install:
+        type: collection
+        name: netapp.cloudmanager
+
+    - name: Install collections community.general
+      community.general.ansible_galaxy_install:
+        type: collection
+        name: community.general
+
+    - name: Install collections community.aws
+      community.general.ansible_galaxy_install:
+        type: collection
+        name: community.aws
+
+    - name: Install collections netapp.ontap
+      community.general.ansible_galaxy_install:
+        type: collection
+        name: netapp.ontap
+
+  tags:
+    - ansible_requirements

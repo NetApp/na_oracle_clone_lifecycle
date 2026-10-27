@@ -1,0 +1,14 @@
+---
+- block:
+# ----------------------------------------------------------------------------------------------------------------------
+# Setup tasks for Oracle database cloning in ONTAP storage
+# ----------------------------------------------------------------------------------------------------------------------
+    - name: Connect to SnapCenter from target clone Oracle server
+      ansible.builtin.shell: "{{ spl_bin }}/sccli Open-SmConnection -Username {{ snapctr_usr }} -Password {{ snapctr_pwd }}"
+      tags:
+        - snapctr_smconnect
+
+    - name: Create clone specification
+      ansible.builtin.shell: "{{ spl_bin }}/sccli New-SmOracleCloneSpecification -appobjectid '{{ snapctr_obj_id }}' -CloneLastBackup 0 -CloneDatabaseSID {{ clone_db_sid }}"
+      tags:
+        - snapctr_clone_spec
